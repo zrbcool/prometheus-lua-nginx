@@ -1,3 +1,4 @@
+*.jar
 workdir/client_body_temp
 workdir/fastcgi_temp
 workdir/logs

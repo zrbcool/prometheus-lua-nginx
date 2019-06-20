@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  prom:
+    image: "prometheus-lua-prom:latest"
+    ports:
+     - "9090:9090"
+
+  grafana:
+    image: "prometheus-lua-grafana:latest"
+    ports:
+     - "3000:3000"
+
+  resty:
+    image: "prometheus-lua-nginx:latest" 
+    ports:
+     - "80:80"
+     - "9145:9145"
+
+  backend:
+    image: "prometheus-lua-backend:latest"
+    ports:
+     - "8081:8081"
