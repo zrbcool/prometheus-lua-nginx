@@ -13,3 +13,7 @@ rule_files:
   - "nginx.*.rule"
 
 scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+    - targets: ['resty:9145']

@@ -1,1 +1,1 @@
-docker build -t prometheus-lua-prom:latest -f Dockerfile .
+docker build -t zrbcool/prometheus-lua-prom:latest -f Dockerfile .
