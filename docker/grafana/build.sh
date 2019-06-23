@@ -1,1 +1,1 @@
-docker build -t prometheus-lua-grafana:latest -f Dockerfile .
+docker build -t zrbcool/prometheus-lua-grafana:latest -f Dockerfile .
