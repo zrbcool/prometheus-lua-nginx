@@ -1,0 +1,8 @@
+groups:
+  - name: label
+    interval: 2m
+    rules:
+    - record: job:nginx_http_request_duration_seconds:labels_2XX_by_endpoint_host
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"2.."}[3h])) by (endpoint,host) > 30
+    - record: job:nginx_http_request_duration_seconds:labels_2XX_by_fullurl_endpoint_host
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"2.."}[3h])) by (fullurl,host,endpoint) > 30

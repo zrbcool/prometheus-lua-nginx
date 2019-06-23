@@ -6,5 +6,10 @@ COPY datasource.yml /etc/grafana/provisioning/datasources/datasource.yml
 
 RUN mkdir /var/lib/grafana/dashboards
 
-COPY dashboard.json /var/lib/grafana/dashboards/dashboard.json
-COPY dashboard.json /etc/grafana/provisioning/dashboard.json
+COPY api-dashboard.json /var/lib/grafana/dashboards/api-dashboard.json
+COPY api-endpoint.json /var/lib/grafana/dashboards/api-endpoint.json
+COPY api-endpoint-url.json /var/lib/grafana/dashboards/api-endpoint-url.json
+COPY api-host.json /var/lib/grafana/dashboards/api-host.json
+
+#COPY dashboard.json /var/lib/grafana/dashboards/dashboard.json
+#COPY dashboard.json /etc/grafana/provisioning/dashboard.json

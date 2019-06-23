@@ -1,0 +1,53 @@
+groups:
+- name: alert
+  rules:
+
+  - alert: InstanceStatus
+    expr: up{instance!="172.16.10.227:8300",job!~"prometheus|node|tap-web"} == 0
+    for: 10s
+    labels:
+      instance: "{{ $labels.instance }}"
+    annotations:
+      summary: "服务器 {{ $labels.instance }} 运行状态"
+      description: "服务器{{ $labels.instance }}已当机超过20s"
+  
+  - alert: APIHighRequestLatency
+    expr: sum(rate(nginx_http_request_duration_seconds_sum[1m])) by(host,endpoint) / sum(rate(nginx_http_request_duration_seconds_count[1m])) by(host,endpoint) > 1
+    for: 2m
+    annotations:
+      summary: "{{ $labels.host }} 接口{{ $labels.endpoint }} 运行状态"
+      description: "{{ $labels.host }} 接口{{ $labels.endpoint }}响应超过1s(current value: {{ $value }}s)"
+
+  - alert: API502Status
+    expr: sum(irate(nginx_http_request_duration_seconds_count{status="502"}[1m])) by (host,endpoint) > 100
+    for: 3m
+    annotations:
+      summary: " {{ $labels.host }} 接口{{ $labels.endpoint }} 运行状态"
+      description: "{{ $labels.host }} 接口{{ $labels.endpoint }}502大于100(current value: {{ $value }}s)"
+
+  - alert: APIErrorRate
+    expr: topk(5, 100*sum(rate(nginx_http_request_duration_seconds_count{endpoint!~"/task|/ac|/invite|/grow|/coohua|/taskDaily",status!~"200|304|403",host!~"forum.coohua.com|coomall.coohua.com"}[1m])) by (host, endpoint)/sum(rate(nginx_http_request_duration_seconds_count{endpoint!~"/task|/ac|/invite|/grow|/coohua|/taskDaily",host!~"forum.coohua.com|coomall.coohua.com"}[5m])) by (host, endpoint)) > 10
+    for: 3m
+    annotations:
+      summary: "{{ $labels.host }} 接口{{ $labels.endpoint }} 运行状态"
+      description: "{{ $labels.host }} 接口{{ $labels.endpoint }}错误率大于10%(current value: {{ $value }}%)"
+
+  - alert: API404Status
+    expr: topk(5, sum by(host, fullurl) (irate(nginx_http_request_duration_seconds_count{host!="coomall.coohua.com",status="404",fullurl!="/activityV1/ladderActivity/conf"}[1m]))) > 20 
+    for: 3m
+    annotations:
+      summary: " {{ $labels.host }} 接口{{ $labels.endpoint }} 运行状态"
+      description: "{{ $labels.host }} 接口{{ $labels.endpoint }}404错误率大于20(current value: {{ $value }})"
+
+- name: dingtalk2 
+  rules:
+  - alert: "性能下降告警" 
+    expr: round((avg(avg_over_time(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host="xwz.coohua.com"}[1h])) by (fullurl,host)/avg(avg_over_time(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host="xwz.coohua.com"}[1h] offset 24h)) by (fullurl,host) > 1.5) * 100)/100 
+    for: 10s
+    labels:
+      fullurl: "{{ $labels.fullurl }}"
+      host: "{{ $labels.host }}"
+      debug: "true"
+    annotations:
+      desc: "P99耗时(过去1小时平均值)是昨日同期{{ $value }}倍"
+

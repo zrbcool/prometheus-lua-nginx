@@ -1,0 +1,21 @@
+groups:
+  - name: err_rate
+    rules:
+    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_host_endpoint
+      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) by (host,endpoint) / sum(increase(nginx_http_request_duration_seconds_count{}[10m])) by (host,endpoint)) * 100
+    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_host_endpoint_fullurl
+      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) by (host, endpoint, fullurl) / sum(increase(nginx_http_request_duration_seconds_count{}[10m])) by (host, endpoint, fullurl)) * 100
+
+
+    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_instance
+      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) by (instance) / sum(increase(nginx_http_request_duration_seconds_count{}[10m])) by (instance)) * 100
+    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_host_instance
+      expr: (sum by(host,instance) (increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) / sum by(host,instance) (increase(nginx_http_request_duration_seconds_count[10m]))) * 100 
+    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_host
+      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) by (host) / sum(increase(nginx_http_request_duration_seconds_count{}[10m])) by (host)) * 100
+#    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_endpoint
+#      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) by (endpoint) / sum(increase(nginx_http_request_duration_seconds_count{}[10m])) by (endpoint)) * 100
+#    - record: job:nginx_http_request_duration_seconds_sum:err_rate_by_endpoint_fullurl
+#      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) by (endpoint, fullurl) / sum(increase(nginx_http_request_duration_seconds_count{}[10m])) by (endpoint, fullurl)) * 100
+    - record: job:nginx_http_request_duration_seconds_sum:err_rate
+      expr: (sum(increase(nginx_http_request_duration_seconds_count{status!~"2..|403|304"}[10m])) / sum(increase(nginx_http_request_duration_seconds_count{}[10m]))) * 100

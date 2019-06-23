@@ -1,0 +1,13 @@
+groups:
+  - name: counter
+    rules:
+    - record: job:nginx_http_request_duration_seconds_count:err_counter_403_by_endpoint_instance
+      expr: sum(nginx_http_request_duration_seconds_count{status="403"}) by (endpoint, instance)
+    - record: job:nginx_http_request_duration_seconds_count:err_counter_403_by_endpoint_host_instance
+      expr: sum by(endpoint, host, instance) (nginx_http_request_duration_seconds_count{status="403"})
+    - record: job:nginx_http_request_duration_seconds_count:counter_by_host
+      expr: count(count(nginx_http_request_duration_seconds_count) by (host, instance)) by (host)
+    - record: job:app_http_incoming_requests_concurrent_gauge:conc_by_appId
+      expr: sum (app_http_incoming_requests_concurrent_gauge{} offset 1m) by (appId)
+    - record: job:app_motan_requests_in_concurrent_gauge:conc_by_appId
+      expr: sum (app_motan_requests_in_concurrent_gauge{} offset 1m) by (appId)

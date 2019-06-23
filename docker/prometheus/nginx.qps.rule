@@ -1,0 +1,23 @@
+groups:
+  - name: qps
+    rules:
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_2XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (instance, host)
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (instance, host, endpoint)
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_fullurl_2XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (instance, host, endpoint, fullurl)
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_3XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"3.."}[3m])) by (instance, host)
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_4XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"40[^3]{1}|4[^0]{1}."}[3m])) by (instance, host)
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_403
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"403"}[3m])) by (instance, host)
+    - record: job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_5XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"5.."}[3m])) by (instance, host)
+    - record: job:nginx_http_request_duration_seconds:qps_by_endpoint_fullurl_2XX
+      expr: sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (endpoint, fullurl)
+    - record: job:app_http_incoming_requests_latency_seconds:qps_by_appId
+      expr: sum (rate(app_http_incoming_requests_latency_seconds_histogram_count{}[1m] offset 1m)) by (appId)
+    - record: job:app_motan_requests_in_latency_seconds:qps_by_appId
+      expr: sum (rate(app_motan_requests_in_latency_seconds_histogram_count{}[1m] offset 1m)) by (appId) 
