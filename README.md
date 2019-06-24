@@ -19,11 +19,18 @@ this compose will install a set of containers for a demo use:
 - a openresty as proxy with counter.lua and promethues.lua integrated, can collect latency metrics, and expose them by :9145/metrics endpoint
 - a promethues has pre configured previous oprenresty as scrape target
 
-how to asscess:
+how to access:
 - access grafana by [hostip]:3000
 - access promethues by [hostip]:9090
 - access openresty exposed metrics by [hostip]:9145/metrics
 - access [hostip]:8081/latency/[latency]/bytes/[bytes] to mock a api call, for instance -> :8081/latency/100/bytes/10
 ## Building
 ## Contact
-
+### E-Mail
+zhangrongbincool@163.com
+zhangrongbincool@gmail.com
+zhangrongbin@coohua.com
+### Blog
+[blog.zrbcool.top](http://blog.zrbcool.top)
+### Other Topics
+[github](https://github.com/zrbcool/blog-public)
