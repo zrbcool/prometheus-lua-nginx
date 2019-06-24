@@ -25,6 +25,27 @@ how to access:
 - access openresty exposed metrics by [hostip]:9145/metrics
 - access [hostip]:8081/latency/[latency]/bytes/[bytes] to mock a api call, for instance -> :8081/latency/100/bytes/10
 ## Building
+### About Demo build
+You should aware that the demo is only for demo use, if you want to use it in your production environment, you need to completely know how the demo and the solution runs. If you are ready, please see ./docker/xxx for more details
+### Build a OpenResty from source and integrate LUA metrics collection code
+- copy workdir/conf.d/counter.conf to your conf.d dir
+- copy workdir/lua/prometheus.lua to your openresty lib dir
+- change lua_package_path in counter.conf to define lib location
+- copy /workdir/lua/counter.lua to your openresty lua dir
+here is our workdir structure
+```shell
+workdir
+├── conf.d
+│   ├── backend.conf # backend service config, replace it by your real workload
+│   └── counter.conf # define lua-prometheus related vars and import deps
+├── html
+│   ├── 50x.html # demo use static html
+│   └── index.html # demo use static html
+├── lua
+│   ├── counter.lua # metric collection code
+│   └── prometheus.lua # prometheus.lua is offical Prometheus LUA Library you can upgrade it from https://github.com/knyar/nginx-lua-prometheus
+└── nginx.conf # main config
+```
 ## Contact
 ### E-Mail
 - zhangrongbincool@163.com
