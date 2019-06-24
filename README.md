@@ -27,9 +27,9 @@ how to access:
 ## Building
 ## Contact
 ### E-Mail
-zhangrongbincool@163.com
-zhangrongbincool@gmail.com
-zhangrongbin@coohua.com
+- zhangrongbincool@163.com
+- zhangrongbincool@gmail.com
+- zhangrongbin@coohua.com
 ### Blog
 [blog.zrbcool.top](http://blog.zrbcool.top)
 ### Other Topics
