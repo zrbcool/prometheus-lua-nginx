@@ -7,11 +7,4 @@
 ![](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/pictures/resty-lua-prometheus-snapshot03.png)
 ### drill down to one specific URL(http api) dashboard
 ![](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/pictures/resty-lua-prometheus-snapshot04.png)
-## Architecture
-
-## Features
-
-## Getting started
-## Building
-## Contact
 
