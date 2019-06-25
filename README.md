@@ -1,3 +1,8 @@
+# prometheus-lua-nginx
+[![Docker Repository](https://quay.io/repository/rebuy/nginx-exporter/status "Docker Repository")](https://quay.io/repository/rebuy/nginx-exporter)
+[![license](https://img.shields.io/github/license/rebuy-de/nginx-exporter.svg)]()
+[![GitHub release](https://img.shields.io/github/release/rebuy-de/nginx-exporter.svg)]()
+
 ## Overview
 Project **prometheus-lua-nginx** is a complete solution for openresty based api gateway monitoring, **prometheus-lua-nginx** use prometheus lua lib and openresty http request life cycle to inject monitoring code, it is async, high performance, and business awareness, it also have built-in grafana dashboard out of box, please see [Snapshots](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/Snapshots.md)
 ## Architecture
