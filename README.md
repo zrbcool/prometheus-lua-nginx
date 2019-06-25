@@ -27,7 +27,8 @@ how to access:
 ## Building
 ### About Demo build
 You should aware that the demo is only for demo use, if you want to use it in your production environment, you need to completely know how the demo and the solution runs. If you are ready, please see ./docker/xxx for more details
-### Build a OpenResty from source and integrate LUA metrics collection code
+### Build OpenResty from source and integrate LUA metrics collection code
+- Buil OpenResty from source, please follow [BuildOpenResty](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/BuildOpenResty.md)
 - copy workdir/conf.d/counter.conf to your conf.d dir
 - copy workdir/lua/prometheus.lua to your openresty lib dir
 - change lua_package_path in counter.conf to define lib location
@@ -45,6 +46,28 @@ workdir
 │   ├── counter.lua # metric collection code
 │   └── prometheus.lua # prometheus.lua is offical Prometheus LUA Library you can upgrade it from https://github.com/knyar/nginx-lua-prometheus
 └── nginx.conf # main config
+```
+- if you just want run current project, please follow:
+```java
+export RESTY_HOME=/opt/openresty
+cd $RESTY_HOME
+git clone https://github.com/zrbcool/prometheus-lua-nginx.git
+ln -s $RESTY_HOME/prometheus-lua-nginx/workdir $RESTY_HOME/workdir
+mkdir $RESTY_HOME/workdir/logs
+cd $RESTY_HOME
+git clone https://github.com/knyar/nginx-lua-prometheus.git
+cp nginx-lua-prometheus/prometheus.lua workdir/lua
+$RESTY_HOME/build/nginx/sbin/nginx \
+	-p $RESTY_HOME/workdir \
+	-c $RESTY_HOME/workdir/nginx.conf
+
+curl localhost:8080
+	<p>hello, world</p>
+curl localhost:9145/metrics
+	# HELP nginx_metric_errors_total Number of nginx-lua-prometheus errors
+	# TYPE nginx_metric_errors_total counter
+	nginx_metric_errors_total 0
+pkill nginx
 ```
 ## Contact
 ### E-Mail
