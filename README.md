@@ -1,8 +1,6 @@
 # prometheus-lua-nginx
 ![GitHub stars](https://img.shields.io/github/stars/zrbcool/prometheus-lua-nginx.svg?style=social)
 ![GitHub followers](https://img.shields.io/github/followers/zrbcool.svg?style=social)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/zrbcool/prometheus-lua-nginx.svg)
-![Arch Linux package](https://img.shields.io/archlinux/v/core/x86_64/pacman.svg)
 ## Overview
 Project **prometheus-lua-nginx** is a complete solution for openresty based api gateway monitoring, **prometheus-lua-nginx** use prometheus lua lib and openresty http request life cycle to inject monitoring code, it is async, high performance, and business awareness, it also have built-in grafana dashboard out of box, please see [Snapshots](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/Snapshots.md)
 ## Architecture
