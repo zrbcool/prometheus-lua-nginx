@@ -1,5 +1,5 @@
 ## Overview
-Project prometheus-lua-nginx is a complete solution for openresty based api gateway monitoring, prometheus-lua-nginx use prometheus lua lib and openresty http request life cycle to inject monitoring code, it is async, high performance, and business awareness, it also have built-in grafana dashboard out of box, please see [Snapshots](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/Snapshots.md)
+Project **prometheus-lua-nginx** is a complete solution for openresty based api gateway monitoring, **prometheus-lua-nginx** use prometheus lua lib and openresty http request life cycle to inject monitoring code, it is async, high performance, and business awareness, it also have built-in grafana dashboard out of box, please see [Snapshots](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/Snapshots.md)
 ## Architecture
 
 ## Features
@@ -28,7 +28,7 @@ how to access:
 ### About Demo build
 You should aware that the demo is only for demo use, if you want to use it in your production environment, you need to completely know how the demo and the solution runs. If you are ready, please see ./docker/xxx for more details
 ### Build OpenResty from source and integrate LUA metrics collection code
-- Buil OpenResty from source, please follow [BuildOpenResty](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/BuildOpenResty.md)
+- build OpenResty from source, please follow [BuildOpenResty](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/BuildOpenResty.md)
 - copy workdir/conf.d/counter.conf to your conf.d dir
 - copy workdir/lua/prometheus.lua to your openresty lib dir
 - change lua_package_path in counter.conf to define lib location
