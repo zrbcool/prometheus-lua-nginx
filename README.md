@@ -19,7 +19,7 @@ Dimensions:
 - statuscode, method, scheme
 
 **prometheus-lua-nginx** use Prometheus to collect request latency metrics, below is the data model
-> <metric name>{<label name>=<label value>, ...}
+`<metric name>{<label name>=<label value>, ...}`
 	
 for example:	
 ```yaml
