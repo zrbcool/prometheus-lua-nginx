@@ -5,8 +5,10 @@
 Project **prometheus-lua-nginx** is a complete solution for openresty based api gateway monitoring, **prometheus-lua-nginx** use prometheus lua lib and openresty http request life cycle to inject monitoring code, it is async, high performance, and business awareness, it also have built-in grafana dashboard out of box, please see [Snapshots](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/Snapshots.md)
 
 ## Concept
-How to measure your API performance? how stable your service are?
-The answer is metrics monitoring:
+How to measure your API performance? how stable your service are? 
+
+The answer is metrics monitoring: 
+
 From last one years, our best practise is the following metrics and dimensions
 - P99(latency percent 99%), P999, P90 this most important metrics, it will impact your uses expirence about your apis.
 - Error rate
