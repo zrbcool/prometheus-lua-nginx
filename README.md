@@ -18,7 +18,8 @@ Dimensions:
 - SLA， correct response/all request * 100% during a timewindow
 - statuscode, method, scheme
 
-**prometheus-lua-nginx** use Prometheus to collect request latency metrics, below is the data model
+**prometheus-lua-nginx** use Prometheus to collect request latency metrics, below is the data model 
+
 `<metric name>{<label name>=<label value>, ...}`
 	
 for example:	
