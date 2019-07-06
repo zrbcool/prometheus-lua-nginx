@@ -26,7 +26,11 @@ how to access:
 - access grafana by [hostip]:3000
 - access promethues by [hostip]:9090
 - access openresty exposed metrics by [hostip]:9145/metrics
-- access [hostip]:8081/latency/[latency]/bytes/[bytes] to mock a api call, for instance -> :8081/latency/100/bytes/10
+- access [hostip]:80/service/latency/[latency]/bytes/[bytes] to mock a api call, 
+  > for instance -> curl -H "host:anyhost.com" [hostip]:80/service/latency/10/bytes/10
+  > or use ab to simulate real workload like: ab -n 10 -H "host:anyhost.com" officepc:80/service/latency/10/bytes/10
+- check the dashboard
+![](http://oss.zrbcool.top/picgo/20190706151826.png)
 ## Building
 ### About Demo build
 You should aware that the demo is only for demo use, if you want to use it in your production environment, you need to completely know how the demo and the solution runs. If you are ready, please see ./docker/xxx for more details
