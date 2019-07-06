@@ -3,6 +3,45 @@
 ![GitHub followers](https://img.shields.io/github/followers/zrbcool.svg?style=social)
 ## Overview
 Project **prometheus-lua-nginx** is a complete solution for openresty based api gateway monitoring, **prometheus-lua-nginx** use prometheus lua lib and openresty http request life cycle to inject monitoring code, it is async, high performance, and business awareness, it also have built-in grafana dashboard out of box, please see [Snapshots](https://github.com/zrbcool/prometheus-lua-nginx/blob/master/Snapshots.md)
+
+## Concept
+How to measure your API performance? how stable your service are?
+The answer is metrics monitoring:
+From last one years, our best practise is the following metrics and dimensions
+- P99(latency percent 99%), P999, P90 this most important metrics, it will impact your uses expirence about your apis.
+- Error rate
+- QPS
+Dimensions:
+- host, every web site use virtual host to isolate sub business systems
+- endpoint, endpoint is the root access point of your api like /myapi
+- fullurl, this is the detail of one specific api, not aggrated data, it will help you find out the service quality trends
+- SLA， correct response/all request * 100% during a timewindow
+- statuscode, method, scheme
+
+**prometheus-lua-nginx** use Prometheus to collect request latency metrics, below is the data model
+> <metric name>{<label name>=<label value>, ...}
+	
+for example:	
+```yaml
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.010"} 42
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.020"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.030"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.050"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.075"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.100"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.200"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.300"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.400"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.500"} 249
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="00.750"} 249
+...
+nginx_http_request_duration_seconds_bucket{host="demo1.coohua.com",status="499",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency",le="+Inf"} 1
+nginx_http_request_duration_seconds_count{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency"} 249
+nginx_http_request_duration_seconds_count{host="demo1.coohua.com",status="499",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency"} 1
+nginx_http_request_duration_seconds_sum{host="demo1.coohua.com",status="200",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency"} 2.82
+nginx_http_request_duration_seconds_sum{host="demo1.coohua.com",status="499",scheme="http",method="GET",endpoint="/service",fullurl="/service/latency"} 0.008
+```
+and then we use grafana to setup a dashboard, and add a prometheus datasource, then use prometheus functions to get the calculate metrics like P99, P999, SLA, ERR rate, etc.
 ## Architecture
 
 ## Features
