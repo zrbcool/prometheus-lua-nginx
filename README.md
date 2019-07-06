@@ -10,9 +10,10 @@ How to measure your API performance? how stable your service are?
 The answer is metrics monitoring: 
 
 From last one years, our best practise is the following metrics and dimensions
-- P99(latency percent 99%), P999, P90 this most important metrics, it will impact your uses expirence about your apis.
+- P99(latency percent 99%), P999, P90 this most important metrics, it will impact your users expirence about your apis.
 - Error rate
-- QPS
+- QPS 
+
 Dimensions:
 - host, every web site use virtual host to isolate sub business systems
 - endpoint, endpoint is the root access point of your api like /myapi
