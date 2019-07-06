@@ -1,13 +1,44 @@
 groups:
   - name: counter
     rules:
-    - record: job:nginx_http_request_duration_seconds_count:err_counter_403_by_endpoint_instance
-      expr: sum(nginx_http_request_duration_seconds_count{status="403"}) by (endpoint, instance)
-    - record: job:nginx_http_request_duration_seconds_count:err_counter_403_by_endpoint_host_instance
-      expr: sum by(endpoint, host, instance) (nginx_http_request_duration_seconds_count{status="403"})
-    - record: job:nginx_http_request_duration_seconds_count:counter_by_host
-      expr: count(count(nginx_http_request_duration_seconds_count) by (host, instance)) by (host)
-    - record: job:app_http_incoming_requests_concurrent_gauge:conc_by_appId
-      expr: sum (app_http_incoming_requests_concurrent_gauge{} offset 1m) by (appId)
-    - record: job:app_motan_requests_in_concurrent_gauge:conc_by_appId
-      expr: sum (app_motan_requests_in_concurrent_gauge{} offset 1m) by (appId)
+    #host
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_3XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"3.."}[1m])) by (host)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_4XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"40[^3]{1}|4[^0]{1}."}[1m])) by (host)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_5XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"5.."}[1m])) by (host)
+    #host,endpoint
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_3XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"3.."}[1m])) by (host, endpoint)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_4XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"40[^3]{1}|4[^0]{1}."}[1m])) by (host, endpoint)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_5XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"5.."}[1m])) by (host, endpoint)
+    #host,endpoint,fullurl
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_3XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"3.."}[1m])) by (host, endpoint, fullurl)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_4XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"40[^3]{1}|4[^0]{1}."}[1m])) by (host, endpoint, fullurl)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_5XX
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"5.."}[1m])) by (host, endpoint, fullurl)
+    #host,endpoint,fullurl,instance
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_3XX_endpoint_fullurl_instance
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"3.."}[1m])) by (host,endpoint,fullurl,instance)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_5XX_endpoint_fullurl_instance
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"5.."}[1m])) by (host,endpoint,fullurl,instance)
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_4XX_endpoint_fullurl_instance
+      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"40[^3]{1}|4[^0]{1}."}[1m])) by (host,endpoint,fullurl,instance)
+    #host,endpoint,fullurl,instance,status
+    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_status_endpoint_fullurl_instance
+      expr: sum(increase(nginx_http_request_duration_seconds_count{}[1m])) by (host,status,endpoint,fullurl,instance)
+#    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_2XX_endpoint_fullurl
+#      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"2.."}[1m])) by (host,endpoint,fullurl)
+#    - record: job:nginx_http_request_duration_seconds_count:counter_1min_by_host_2XX_endpoint_fullurl_instance
+#      expr: sum(increase(nginx_http_request_duration_seconds_count{status=~"2.."}[1m])) by (host,endpoint,fullurl,instance)
+#    - record: job:nginx_http_request_duration_seconds_count:err_counter_403_by_endpoint_instance
+#      expr: sum(nginx_http_request_duration_seconds_count{status="403"}) by (endpoint, instance)
+#    - record: job:nginx_http_request_duration_seconds_count:err_counter_403_by_endpoint_host_instance
+#      expr: sum by(endpoint, host, instance) (nginx_http_request_duration_seconds_count{status="403"})
+#    - record: job:nginx_http_request_duration_seconds_count:counter_by_host
+#      expr: count(count(nginx_http_request_duration_seconds_count) by (host, instance)) by (host)

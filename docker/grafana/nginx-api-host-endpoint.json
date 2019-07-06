@@ -15,56 +15,18 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 23,
-  "iteration": 1561113144356,
+  "id": 9,
+  "iteration": 1562396612058,
   "links": [
     {
       "asDropdown": true,
       "icon": "external link",
       "keepTime": true,
       "tags": [
-        "dashboard"
+        "nginx"
       ],
       "targetBlank": true,
-      "title": "# Dashboard",
-      "type": "dashboards"
-    },
-    {
-      "asDropdown": true,
-      "icon": "dashboard",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "http"
-      ],
-      "targetBlank": true,
-      "title": "# HTTP",
-      "tooltip": "# Dashboard",
-      "type": "dashboards",
-      "url": "/d/yCm50nzZz/1-dashboard"
-    },
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "motan"
-      ],
-      "targetBlank": true,
-      "title": "# Motan",
-      "type": "dashboards"
-    },
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "internal"
-      ],
-      "targetBlank": true,
-      "title": "# Internal",
+      "title": "# NGINX",
       "type": "dashboards"
     }
   ],
@@ -87,7 +49,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -95,7 +57,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 140,
+      "id": 133,
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -127,13 +89,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{host=~\"$host\", status=~\"3..\"}[1m])) by (host)",
+          "expr": "job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_3XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "intervalFactor": 2,
-          "legendFormat": "3XX - 1min - {{host}}",
-          "refId": "B"
+          "legendFormat": "3XX - 1min - {{fullurl}} ",
+          "refId": "D"
         }
       ],
       "thresholds": [],
@@ -161,7 +123,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -183,7 +145,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -225,11 +187,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (host) (job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\"})",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{host}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -237,7 +199,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "2XX QPS By Host",
+      "title": "2XX QPS By Instance",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -279,7 +241,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -295,7 +257,7 @@
         "max": false,
         "min": false,
         "rightSide": false,
-        "show": false,
+        "show": true,
         "sort": "current",
         "sortDesc": true,
         "total": false,
@@ -321,7 +283,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\"})",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_2XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -329,7 +291,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_4XX{host=~\"$host\"})",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_4XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -337,7 +299,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_5XX{host=~\"$host\"})",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_5XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -391,7 +353,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -399,7 +361,7 @@
         "x": 0,
         "y": 5
       },
-      "id": 128,
+      "id": 136,
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -431,13 +393,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{host=~\"$host\", status=~\"40[^3]{1}|4[^0]{1}.\"}[1m])) by (host)",
+          "expr": "job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_4XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "intervalFactor": 2,
-          "legendFormat": "4XX - 1min - {{host}}",
-          "refId": "A"
+          "legendFormat": "4XX - 1min - {{fullurl}} ",
+          "refId": "D"
         }
       ],
       "thresholds": [],
@@ -487,7 +449,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -495,7 +457,7 @@
         "x": 8,
         "y": 5
       },
-      "id": 135,
+      "id": 130,
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -529,11 +491,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_4XX{host=~\"$host\"}) by (host)",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_4XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{host}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -541,7 +503,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "4XX QPS By Host",
+      "title": "4XX QPS By Instance",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -583,7 +545,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -591,18 +553,15 @@
         "x": 16,
         "y": 5
       },
-      "id": 138,
+      "id": 135,
       "legend": {
         "alignAsTable": true,
         "avg": true,
-        "current": false,
-        "hideEmpty": true,
-        "hideZero": true,
+        "current": true,
         "max": true,
         "min": false,
         "rightSide": true,
         "show": false,
-        "sideWidth": null,
         "sort": "max",
         "sortDesc": true,
         "total": false,
@@ -617,29 +576,54 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "QPS",
+          "dashes": true,
+          "yaxis": 2
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "job:nginx_http_request_duration_seconds_sum:err_rate_by_host{host=~\"$host\"}",
+          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_endpoint_2XX{host=~\"[[host]]\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "intervalFactor": 2,
-          "legendFormat": "{{host}}",
+          "intervalFactor": 1,
+          "legendFormat": "2XX-P999",
           "refId": "A"
+        },
+        {
+          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_endpoint_2XX{host=~\"[[host]]\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "2XX-P99",
+          "refId": "B"
+        },
+        {
+          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_endpoint_2XX{host=~\"[[host]]\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "2XX-P90",
+          "refId": "C"
+        },
+        {
+          "expr": "job:nginx_http_request_duration_seconds:avg_by_host_endpoint_2XX{host=~\"[[host]]\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "2XX-AVG",
+          "refId": "D"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "ERROR Rate",
+      "title": "2XX Latency",
       "tooltip": {
         "shared": true,
-        "sort": 2,
+        "sort": 0,
         "value_type": "individual"
       },
       "type": "graph",
@@ -652,8 +636,7 @@
       },
       "yaxes": [
         {
-          "decimals": 1,
-          "format": "percent",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -679,7 +662,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -687,7 +670,7 @@
         "x": 0,
         "y": 9
       },
-      "id": 139,
+      "id": 137,
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -719,13 +702,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{host=~\"$host\", status=~\"5..\"}[1m])) by (host)",
+          "expr": "job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_5XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "intervalFactor": 2,
-          "legendFormat": "5XX - 1min - {{host}}",
-          "refId": "B"
+          "legendFormat": "5XX - 1min - {{fullurl}} ",
+          "refId": "D"
         }
       ],
       "thresholds": [],
@@ -753,7 +736,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -775,7 +758,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 4,
@@ -783,7 +766,7 @@
         "x": 8,
         "y": 9
       },
-      "id": 136,
+      "id": 131,
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -817,11 +800,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_5XX{host=~\"$host\"}) by (host)",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_5XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{host}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -829,7 +812,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "5XX QPS By Host",
+      "title": "5XX QPS By Instance",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -849,7 +832,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -867,6 +850,102 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus-Aggregator",
+      "fill": 1,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 9
+      },
+      "id": 128,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": false,
+        "sideWidth": null,
+        "sort": "max",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "job:nginx_http_request_duration_seconds_sum:err_rate_by_host_endpoint_fullurl{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{fullurl}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "ERROR Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 3,
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -876,24 +955,24 @@
       },
       "id": 122,
       "panels": [],
-      "title": "Endpoint",
+      "title": "URL",
       "type": "row"
     },
     {
       "columns": [],
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fontSize": "100%",
       "gridPos": {
-        "h": 18,
-        "w": 24,
+        "h": 10,
+        "w": 8,
         "x": 0,
         "y": 14
       },
       "id": 116,
       "links": [],
       "options": {},
-      "pageSize": 30,
-      "scroll": true,
+      "pageSize": 10,
+      "scroll": false,
       "showHeader": true,
       "sort": {
         "col": 2,
@@ -917,12 +996,8 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "link": false,
-          "linkTargetBlank": true,
-          "linkTooltip": "",
-          "linkUrl": "",
           "mappingType": 1,
           "pattern": "__name__",
-          "sanitize": false,
           "thresholds": [],
           "type": "hidden",
           "unit": "short"
@@ -939,102 +1014,13 @@
           "decimals": 2,
           "link": true,
           "linkTargetBlank": true,
-          "linkTooltip": "点击进入详情",
-          "linkUrl": "/d/fDyKFe7Zk/api-host?var-host=${__cell_1}",
+          "linkTooltip": "点击查看详情",
+          "linkUrl": "/d/utbSxXVZz/nginx-api-host-endpoint-url?var-host=$host&&var-endpoint=${endpoint}&&var-fullurl=${__cell_1}",
           "mappingType": 1,
-          "pattern": "Value #A",
+          "pattern": "Value",
           "thresholds": [],
           "type": "number",
           "unit": "short"
-        },
-        {
-          "alias": "3XX - 1min",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "link": true,
-          "linkTargetBlank": true,
-          "linkTooltip": "点击进入详情",
-          "linkUrl": "/d/fDyKFe7Zk/api-host?var-host=${__cell_1}",
-          "mappingType": 1,
-          "pattern": "Value #B",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        },
-        {
-          "alias": "4XX - 1min",
-          "colorMode": "cell",
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "link": true,
-          "linkTargetBlank": true,
-          "linkTooltip": "点击进入详情",
-          "linkUrl": "/d/fDyKFe7Zk/api-host?var-host=${__cell_1}",
-          "mappingType": 1,
-          "pattern": "Value #C",
-          "thresholds": [
-            "100",
-            "10"
-          ],
-          "type": "number",
-          "unit": "short"
-        },
-        {
-          "alias": "5XX - 1min",
-          "colorMode": "cell",
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "link": true,
-          "linkTargetBlank": true,
-          "linkTooltip": "点击进入详情",
-          "linkUrl": "/d/fDyKFe7Zk/api-host?var-host=${__cell_1}",
-          "mappingType": 1,
-          "pattern": "Value #D",
-          "thresholds": [
-            "100",
-            "10"
-          ],
-          "type": "number",
-          "unit": "short"
-        },
-        {
-          "alias": "SLA",
-          "colorMode": "cell",
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "link": true,
-          "linkTargetBlank": true,
-          "linkTooltip": "点击进入详情",
-          "linkUrl": "/d/fDyKFe7Zk/api-host?var-host=${__cell_1}",
-          "mappingType": 1,
-          "pattern": "Value #E",
-          "thresholds": [
-            "0.999",
-            "0.99"
-          ],
-          "type": "number",
-          "unit": "percent"
         },
         {
           "alias": "",
@@ -1048,10 +1034,10 @@
           "decimals": 2,
           "link": true,
           "linkTargetBlank": true,
-          "linkTooltip": "点击进入详情",
-          "linkUrl": "/d/fDyKFe7Zk/api-host?var-host=${__cell_1}",
+          "linkTooltip": "点击查看详情",
+          "linkUrl": "/d/utbSxXVZz/nginx-api-host-endpoint-url?var-host=$host&&var-endpoint=${endpoint}&&var-fullurl=${__cell_1}",
           "mappingType": 1,
-          "pattern": "host",
+          "pattern": "fullurl",
           "thresholds": [],
           "type": "number",
           "unit": "short"
@@ -1073,47 +1059,241 @@
       ],
       "targets": [
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_2XX{host=~\"$host\"}) by (host)",
+          "expr": "topk(10, sum by(fullurl) (job:nginx_http_request_duration_seconds:qps_by_host_endpoint_fullurl_2XX{host=~\"$host\", endpoint=~\"$endpoint\"}))",
           "format": "table",
           "hide": false,
           "instant": true,
           "intervalFactor": 1,
           "refId": "A"
+        }
+      ],
+      "title": "TOP 10 QPS",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "Prometheus-Aggregator",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 8,
+        "y": 14
+      },
+      "id": 123,
+      "links": [],
+      "options": {},
+      "pageSize": 10,
+      "scroll": false,
+      "showHeader": true,
+      "sort": {
+        "col": 2,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
         },
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{host=~\"$host\", status=~\"3..\"}[1m])) by (host)",
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "__name__",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "4XX",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "点击查看详情",
+          "linkUrl": "/d/utbSxXVZz/nginx-api-host-endpoint-url?var-host=$host&&var-endpoint=${endpoint}&&var-fullurl=${__cell_1}",
+          "mappingType": 1,
+          "pattern": "Value",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "点击查看详情",
+          "linkUrl": "/d/utbSxXVZz/nginx-api-host-endpoint-url?var-host=$host&&var-endpoint=${endpoint}&&var-fullurl=${__cell_1}",
+          "mappingType": 1,
+          "pattern": "fullurl",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "topk(10, sum(job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_4XX{host=~\"$host\", endpoint=~\"$endpoint\"}) by (fullurl)>0)",
           "format": "table",
           "hide": false,
           "instant": true,
           "intervalFactor": 1,
           "refId": "B"
-        },
-        {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_4XX{host=~\"$host\"}) by (host)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "intervalFactor": 1,
-          "refId": "C"
-        },
-        {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_status_method_5XX{host=~\"$host\"}) by (host)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "intervalFactor": 1,
-          "refId": "D"
-        },
-        {
-          "expr": "100-job:nginx_http_request_duration_seconds_sum:err_rate_by_host{host=~\"$host\"}",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "intervalFactor": 1,
-          "refId": "E"
         }
       ],
-      "title": "",
+      "title": "TOP 10 4XX - 1min",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "Prometheus-Aggregator",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 14
+      },
+      "id": 124,
+      "links": [],
+      "options": {},
+      "pageSize": 10,
+      "scroll": false,
+      "showHeader": true,
+      "sort": {
+        "col": 2,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "__name__",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "5XX",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "点击查看详情",
+          "linkUrl": "/d/utbSxXVZz/nginx-api-host-endpoint-url?var-host=$host&&var-endpoint=${endpoint}&&var-fullurl=${__cell_1}",
+          "mappingType": 1,
+          "pattern": "Value",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "点击查看详情",
+          "linkUrl": "/d/utbSxXVZz/nginx-api-host-endpoint-url?var-host=$host&&var-endpoint=${endpoint}&&var-fullurl=${__cell_1}",
+          "mappingType": 1,
+          "pattern": "fullurl",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "topk(10, sum(job:nginx_http_request_duration_seconds_count:counter_1min_by_host_endpoint_fullurl_5XX{host=~\"$host\", endpoint=~\"$endpoint\"}) by (fullurl)>0)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "B"
+        }
+      ],
+      "title": "TOP 10 5XX - 1min",
       "transform": "table",
       "type": "table"
     }
@@ -1129,19 +1309,43 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "xwz.coohua.com",
+          "value": "xwz.coohua.com"
         },
-        "datasource": "Prometheus-Nginx",
-        "definition": "label_values(nginx_http_request_duration_seconds_count, host)",
+        "datasource": "Prometheus-Aggregator",
+        "definition": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX, host)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "host",
-        "multi": true,
+        "multi": false,
         "name": "host",
         "options": [],
-        "query": "label_values(nginx_http_request_duration_seconds_count, host)",
+        "query": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX, host)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "/ad",
+          "value": "/ad"
+        },
+        "datasource": "Prometheus-Aggregator",
+        "definition": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\"}, endpoint)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "endpoint",
+        "multi": false,
+        "name": "endpoint",
+        "options": [],
+        "query": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\"}, endpoint)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1155,7 +1359,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1184,7 +1388,7 @@
     ]
   },
   "timezone": "",
-  "title": "API / Dashboard",
-  "uid": "EORYoenZz",
-  "version": 10
+  "title": "NGINX / API / Host / Endpoint",
+  "uid": "u8pccJ4Zk",
+  "version": 11
 }

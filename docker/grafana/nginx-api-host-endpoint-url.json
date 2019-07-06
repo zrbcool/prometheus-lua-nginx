@@ -15,62 +15,24 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 20,
-  "iteration": 1561113210780,
+  "id": 10,
+  "iteration": 1562396443863,
   "links": [
     {
       "asDropdown": true,
       "icon": "external link",
       "keepTime": true,
       "tags": [
-        "dashboard"
+        "nginx"
       ],
       "targetBlank": true,
-      "title": "# Dashboard",
-      "type": "dashboards"
-    },
-    {
-      "asDropdown": true,
-      "icon": "dashboard",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "http"
-      ],
-      "targetBlank": true,
-      "title": "# HTTP",
-      "tooltip": "# Dashboard",
-      "type": "dashboards",
-      "url": "/d/yCm50nzZz/1-dashboard"
-    },
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "motan"
-      ],
-      "targetBlank": true,
-      "title": "# Motan",
-      "type": "dashboards"
-    },
-    {
-      "asDropdown": true,
-      "icon": "external link",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [
-        "internal"
-      ],
-      "targetBlank": true,
-      "title": "# Internal",
+      "title": "# NGINX",
       "type": "dashboards"
     }
   ],
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -78,211 +40,321 @@
         "y": 0
       },
       "id": 126,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus-Nginx",
-          "fill": 1,
-          "gridPos": {
-            "h": 4,
-            "w": 8,
-            "x": 0,
-            "y": 1
-          },
-          "id": 128,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "hideEmpty": true,
-            "hideZero": true,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": false,
-            "sideWidth": null,
-            "sort": "max",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {},
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(nginx_http_request_duration_seconds_count{host=~\"$host\", endpoint=~\"[[endpoint]]\",status!~\"2..|403\"}[1m])) by(fullurl) \n/ \nsum(rate(nginx_http_request_duration_seconds_count{host=~\"$host\", endpoint=~\"[[endpoint]]\"}[1m])) by(fullurl) * 100",
-              "format": "time_series",
-              "hide": true,
-              "instant": false,
-              "intervalFactor": 2,
-              "legendFormat": "{{fullurl}}",
-              "refId": "A"
-            },
-            {
-              "expr": "job:nginx_http_request_duration_seconds_sum:err_rate_by_host_endpoint_fullurl{host=~\"$host\", endpoint=~\"$endpoint\"}",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "intervalFactor": 2,
-              "legendFormat": "{{fullurl}}",
-              "refId": "B"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "ERROR Rate",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "decimals": 3,
-              "format": "percent",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus-Nginx",
-          "fill": 1,
-          "gridPos": {
-            "h": 4,
-            "w": 8,
-            "x": 8,
-            "y": 1
-          },
-          "id": 129,
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {},
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "Summary",
-              "transform": "negative-Y"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_fullurl_2XX{host=~\"$host\", endpoint=~\"$endpoint\"}) by (fullurl)",
-              "format": "time_series",
-              "hide": false,
-              "intervalFactor": 1,
-              "legendFormat": "{{fullurl}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "QPS",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": 1
-          }
-        }
-      ],
+      "panels": [],
       "title": "Overall",
       "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus-Aggregator",
+      "fill": 1,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "id": 128,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": false,
+        "sideWidth": null,
+        "sort": "max",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "job:nginx_http_request_duration_seconds_sum:err_rate_by_host_endpoint_fullurl{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "intervalFactor": 2,
+          "legendFormat": "{{fullurl}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "ERROR Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 3,
+          "format": "percent",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus-Aggregator",
+      "fill": 1,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 1
+      },
+      "id": 155,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Summary",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_2XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "2XX",
+          "refId": "A"
+        },
+        {
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_3XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "3XX",
+          "refId": "B"
+        },
+        {
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_4XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "4XX",
+          "refId": "D"
+        },
+        {
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_5XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "5XX",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "QPS",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": 1
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus-Aggregator",
+      "fill": 1,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 129,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Summary",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_fullurl_2XX{host=~\"$host\", endpoint=~\"$endpoint\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "{{fullurl}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "QPS",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": 1
+      }
     },
     {
       "collapsed": false,
@@ -290,7 +362,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 5
       },
       "id": 122,
       "panels": [],
@@ -298,8 +370,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "title": "$fullurl",
@@ -310,13 +382,13 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 2
+        "y": 6
       },
       "id": 142,
       "legend": {
@@ -328,7 +400,7 @@
         "max": false,
         "min": false,
         "rightSide": false,
-        "show": true,
+        "show": false,
         "sideWidth": null,
         "total": false,
         "values": false
@@ -347,8 +419,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -357,41 +429,41 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\", status=~\"3..\"}[5m]))",
+          "expr": "job:nginx_http_request_duration_seconds_count:counter_1min_by_host_3XX_endpoint_fullurl_instance{host=~\"$host\", endpoint=~\"$endpoint\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "5m",
           "intervalFactor": 2,
-          "legendFormat": "3XX",
+          "legendFormat": "3XX - {{instance}}",
           "refId": "C"
         },
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\", status=~\"40[^3]{1}|4[^0]{1}.\"}[5m]))",
+          "expr": "job:nginx_http_request_duration_seconds_count:counter_1min_by_host_5XX_endpoint_fullurl_instance{host=~\"$host\", endpoint=~\"$endpoint\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "5m",
           "intervalFactor": 2,
-          "legendFormat": "4XX(with out 401 & 403)",
-          "refId": "A"
+          "legendFormat": "5XX - {{instance}}",
+          "refId": "B"
         },
         {
-          "expr": "sum(increase(nginx_http_request_duration_seconds_count{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\", status=~\"5..\"}[5m]))",
+          "expr": "job:nginx_http_request_duration_seconds_count:counter_1min_by_host_4XX_endpoint_fullurl_instance{host=~\"$host\", endpoint=~\"$endpoint\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "5m",
           "intervalFactor": 2,
-          "legendFormat": "5XX",
-          "refId": "B"
+          "legendFormat": "4XX(with out 401 & 403) - {{instance}}",
+          "refId": "D"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "ERROR Count（5 min）",
+      "title": "ERR Count - 1min",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -434,13 +506,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 18,
         "x": 6,
-        "y": 2
+        "y": 6
       },
       "id": 130,
       "legend": {
@@ -472,8 +544,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -482,7 +554,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p999_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -492,7 +564,7 @@
           "refId": "C"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -502,7 +574,7 @@
           "refId": "G"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -512,7 +584,7 @@
           "refId": "H"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:avg_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:avg_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -520,56 +592,6 @@
           "intervalFactor": 2,
           "legendFormat": "avg",
           "refId": "I"
-        },
-        {
-          "expr": "job:nginx_http_request_duration_seconds:p99_by_endpoint_fullurl_2XX{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\"}",
-          "format": "time_series",
-          "hide": true,
-          "instant": false,
-          "interval": "30s",
-          "intervalFactor": 2,
-          "legendFormat": "p99",
-          "refId": "B"
-        },
-        {
-          "expr": "job:nginx_http_request_duration_seconds:p90_by_endpoint_fullurl_2XX{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\"}",
-          "format": "time_series",
-          "hide": true,
-          "instant": false,
-          "interval": "30s",
-          "intervalFactor": 2,
-          "legendFormat": "p90",
-          "refId": "A"
-        },
-        {
-          "expr": "job:nginx_http_request_duration_seconds:avg_by_endpoint_fullurl_2XX{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\"}",
-          "format": "time_series",
-          "hide": true,
-          "instant": false,
-          "interval": "30s",
-          "intervalFactor": 2,
-          "legendFormat": "avg",
-          "refId": "D"
-        },
-        {
-          "expr": "job:nginx_http_request_duration_seconds:p99_by_endpoint_fullurl_5XX{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\"}",
-          "format": "time_series",
-          "hide": true,
-          "instant": false,
-          "interval": "30s",
-          "intervalFactor": 2,
-          "legendFormat": "p99-5xx",
-          "refId": "E"
-        },
-        {
-          "expr": "job:nginx_http_request_duration_seconds:p999_by_endpoint_fullurl_2XX{endpoint=~\"[[endpoint]]\", fullurl=~\"[[fullurl]]\"}",
-          "format": "time_series",
-          "hide": true,
-          "instant": false,
-          "interval": "30s",
-          "intervalFactor": 2,
-          "legendFormat": "p99",
-          "refId": "F"
         }
       ],
       "thresholds": [],
@@ -619,13 +641,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 8
+        "y": 12
       },
       "id": 134,
       "legend": {
@@ -653,8 +675,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [
@@ -668,7 +690,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_fullurl_2XX{host=~\"$host\", endpoint=~\"$endpoint\", fullurl=~\"$fullurl\"})",
+          "expr": "job:nginx_http_request_duration_seconds:qps_by_host_endpoint_fullurl_2XX{host=~\"$host\", endpoint=~\"$endpoint\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -722,13 +744,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 8
+        "y": 12
       },
       "id": 131,
       "legend": {
@@ -759,8 +781,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -769,7 +791,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX{host=~\"$host\", fullurl=~\"[[fullurl]]\"}",
+          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -826,13 +848,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 8
+        "y": 12
       },
       "id": 132,
       "legend": {
@@ -863,8 +885,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -873,7 +895,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"$host\", fullurl=~\"[[fullurl]]\"}",
+          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -930,13 +952,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 8
+        "y": 12
       },
       "id": 133,
       "legend": {
@@ -967,8 +989,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -977,7 +999,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_instance_fullurl_2XX{host=~\"$host\", fullurl=~\"[[fullurl]]\"}",
+          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_instance_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1034,13 +1056,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 14
+        "y": 18
       },
       "id": 112,
       "legend": {
@@ -1068,8 +1090,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [
@@ -1137,13 +1159,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 14
+        "y": 18
       },
       "id": 151,
       "legend": {
@@ -1175,8 +1197,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -1185,33 +1207,33 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "当日-p90",
+          "legendFormat": "ToDay - p90",
           "refId": "B"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} offset 24h > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"} offset 24h",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "昨日-p90",
+          "legendFormat": "LastDay - p90",
           "refId": "F"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} offset 7d > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p90_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"} offset 7d",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "上周-p90",
+          "legendFormat": "LastWeek - p90",
           "refId": "A"
         }
       ],
@@ -1219,7 +1241,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "P90 - 同比环比",
+      "title": "P90 - History Diff",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1262,13 +1284,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 14
+        "y": 18
       },
       "id": 152,
       "legend": {
@@ -1299,8 +1321,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -1309,33 +1331,33 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "当日-p99",
+          "legendFormat": "Today - p99",
           "refId": "B"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} offset 24h > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"} offset 24h",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "昨日-p99",
+          "legendFormat": "LastDay - p99",
           "refId": "F"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} offset 7d > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p99_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"} offset 7d",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "上周-p99",
+          "legendFormat": "LastWeek - p99",
           "refId": "A"
         }
       ],
@@ -1343,7 +1365,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "P99 - 同比环比",
+      "title": "P99 - History Diff",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1386,13 +1408,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus-Nginx",
+      "datasource": "Prometheus-Aggregator",
       "fill": 1,
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 14
+        "y": 18
       },
       "id": 153,
       "legend": {
@@ -1423,8 +1445,8 @@
       "scopedVars": {
         "fullurl": {
           "selected": true,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
         }
       },
       "seriesOverrides": [],
@@ -1433,33 +1455,33 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "当日-p999",
+          "legendFormat": "Today - p999",
           "refId": "B"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} offset 24h > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"} offset 24h",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "昨日-p999",
+          "legendFormat": "LastDay - p999",
           "refId": "F"
         },
         {
-          "expr": "avg(job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX{host=~\"[[host]]\", fullurl=~\"[[fullurl]]\"} offset 7d > 0)",
+          "expr": "job:nginx_http_request_duration_seconds:p999_by_host_fullurl_2XX{host=~\"$host\", fullurl=~\"$fullurl\"} offset 7d",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "30s",
           "intervalFactor": 2,
-          "legendFormat": "上周-p999",
+          "legendFormat": "LastWeek - p999",
           "refId": "A"
         }
       ],
@@ -1467,7 +1489,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "P999 - 同比环比",
+      "title": "P999 - History Diff",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1517,45 +1539,19 @@
       {
         "allValue": null,
         "current": {
+          "selected": true,
           "text": "xwz.coohua.com",
-          "value": [
-            "xwz.coohua.com"
-          ]
+          "value": "xwz.coohua.com"
         },
-        "datasource": "Prometheus-Nginx",
-        "definition": "label_values(nginx_http_request_duration_seconds_count, host)",
+        "datasource": "Prometheus-Aggregator",
+        "definition": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX, host)",
         "hide": 0,
         "includeAll": false,
         "label": "host",
         "multi": false,
         "name": "host",
         "options": [],
-        "query": "label_values(nginx_http_request_duration_seconds_count, host)",
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "text": "/userShow",
-          "value": "/userShow"
-        },
-        "datasource": "Prometheus-Nginx",
-        "definition": "label_values(nginx_http_request_duration_seconds_count{host=~\"$host\"}, endpoint)",
-        "hide": 0,
-        "includeAll": false,
-        "label": "endpoint",
-        "multi": false,
-        "name": "endpoint",
-        "options": [],
-        "query": "label_values(nginx_http_request_duration_seconds_count{host=~\"$host\"}, endpoint)",
+        "query": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX, host)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1570,18 +1566,44 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "/userShow/findInfo",
-          "value": "/userShow/findInfo"
+          "text": "/ad-data-web",
+          "value": "/ad-data-web"
         },
-        "datasource": "Prometheus-Nginx",
-        "definition": "label_values(nginx_http_request_duration_seconds_count{host=~\"$host\",endpoint=~\"$endpoint\"}, fullurl)",
+        "datasource": "Prometheus-Aggregator",
+        "definition": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\"}, endpoint)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "endpoint",
+        "multi": false,
+        "name": "endpoint",
+        "options": [],
+        "query": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_2XX{host=~\"$host\"}, endpoint)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "/ad-data-web/ad/data/process",
+          "value": "/ad-data-web/ad/data/process"
+        },
+        "datasource": "Prometheus-Aggregator",
+        "definition": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_fullurl_2XX{host=~\"$host\",endpoint=~\"$endpoint\"}, fullurl)",
         "hide": 0,
         "includeAll": false,
         "label": "fullurl",
         "multi": true,
         "name": "fullurl",
         "options": [],
-        "query": "label_values(nginx_http_request_duration_seconds_count{host=~\"$host\",endpoint=~\"$endpoint\"}, fullurl)",
+        "query": "label_values(job:nginx_http_request_duration_seconds:qps_by_instance_host_endpoint_fullurl_2XX{host=~\"$host\",endpoint=~\"$endpoint\"}, fullurl)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1624,7 +1646,7 @@
     ]
   },
   "timezone": "",
-  "title": "API / Endpoint / URL",
-  "uid": "P0TkH67Zk",
-  "version": 9
+  "title": "NGINX / API / Host / Endpoint / URL",
+  "uid": "utbSxXVZz",
+  "version": 8
 }

@@ -1,83 +1,47 @@
 groups:
-#  - name: p50
-#    rules:
-#    - record: job:nginx_http_response_size_bytes:p50_by_endpoint_fullurl_2XX
-#      expr: histogram_quantile(0.5, sum(rate(nginx_http_response_size_bytes_bucket{status=~"2.."}[10m])) by(endpoint, fullurl, le))
   - name: p90
     rules:
     - record: job:nginx_http_request_duration_seconds:p90_by_host_2XX
-      expr: histogram_quantile(0.9, sum by(host, le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
+      expr: histogram_quantile(0.9, sum (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by(host, le))
+    - record: job:nginx_http_request_duration_seconds:p90_by_host_endpoint_2XX
+      expr: histogram_quantile(0.9, sum (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by(host, endpoint, le))
+    - record: job:nginx_http_request_duration_seconds:p90_by_host_fullurl_2XX
+      expr: histogram_quantile(0.9, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by (host, fullurl, le))
     - record: job:nginx_http_request_duration_seconds:p90_by_host_instance_fullurl_2XX
       expr: histogram_quantile(0.9, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by (host, instance, fullurl, le))
-#    - record: job:nginx_http_request_duration_seconds:p90_by_endpoint_fullurl_2XX
-#      expr: histogram_quantile(0.9, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[10m])) by (endpoint, fullurl, le))
-#    - record: job:nginx_http_request_duration_seconds:p90_by_endpoint_fullurl_3XX
-#      expr: histogram_quantile(0.9, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"3.."}[10m])) by (endpoint, fullurl, le))
-#    - record: job:nginx_http_request_duration_seconds:p90_by_endpoint_fullurl_4XX
-#      expr: histogram_quantile(0.9, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"4.."}[10m])) by (endpoint, fullurl, le))
-#    - record: job:nginx_http_request_duration_seconds:p90_by_endpoint_fullurl_5XX
-#      expr: histogram_quantile(0.9, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"5.."}[10m])) by (endpoint, fullurl, le))
-#    - record: job:nginx_http_response_size_bytes:p90_by_endpoint_fullurl_2XX
-#      expr: histogram_quantile(0.9, sum(rate(nginx_http_response_size_bytes_bucket{status=~"2.."}[10m])) by(endpoint, fullurl, le))
   - name: p99
     rules:
     - record: job:nginx_http_request_duration_seconds:p99_by_host_2XX
       expr: histogram_quantile(0.99, sum by(host, le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
-    - record: job:nginx_http_request_duration_seconds:p99_2XX
-      expr: histogram_quantile(0.99, sum by(le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
+    - record: job:nginx_http_request_duration_seconds:p99_by_host_endpoint_2XX
+      expr: histogram_quantile(0.99, sum by(host, endpoint, le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
+    - record: job:nginx_http_request_duration_seconds:p99_by_host_fullurl_2XX
+      expr: histogram_quantile(0.99, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by (host, fullurl, le))
     - record: job:nginx_http_request_duration_seconds:p99_by_host_instance_fullurl_2XX
       expr: histogram_quantile(0.99, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by (host, instance, fullurl, le))
-    - record: job:app_http_incoming_requests_latency_seconds:p99_by_appId
-      expr: histogram_quantile(0.99, sum by(appId, le) (rate(app_http_incoming_requests_latency_seconds_histogram_bucket{url!~".+.[php|jsp|gif]/"}[3m])))
-    - record: job:app_http_incoming_requests_latency_seconds:p99
-      expr: histogram_quantile(0.99, sum by(appId, url, instance, le) (rate(app_http_incoming_requests_latency_seconds_histogram_bucket{url!~".+.[php|jsp|gif]/"}[3m])))
-    - record: job:app_motan_requests_in_latency_seconds:p99_by_appId
-      expr: histogram_quantile(0.99, sum by(appId, le) (rate(app_motan_requests_in_latency_seconds_histogram_bucket[3m])))
-    - record: job:app_motan_requests_in_latency_seconds:p99
-      expr: histogram_quantile(0.99, sum by(appId, method, instance, le) (rate(app_motan_requests_in_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:app_motan_requests_out_latency_seconds:p99
-      expr: histogram_quantile(0.99, sum by(appId, method, instance, le) (rate(app_motan_requests_out_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:jedisCluster_latency_seconds:p99
-      expr: histogram_quantile(0.99, sum by(appId, operation,namespace, instance, le) (rate(jedisCluster_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:jedis_latency_seconds:p99
-      expr: histogram_quantile(0.99, sum by(appId, operation,namespace, instance, le) (rate(jedis_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:custom_latency_seconds:p99
-      expr: histogram_quantile(0.99, sum by(appId, operation, instance, le) (rate(custom_latency_seconds_histogram_bucket{}[3m])))
+#    - record: job:nginx_http_request_duration_seconds:p99_2XX
+#      expr: histogram_quantile(0.99, sum by(le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
   - name: p999
     rules:
     - record: job:nginx_http_request_duration_seconds:p999_by_host_2XX
       expr: histogram_quantile(0.999, sum by(host, le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
-    - record: job:nginx_http_request_duration_seconds:p999_2XX
-      expr: histogram_quantile(0.999, sum by(le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
+    - record: job:nginx_http_request_duration_seconds:p999_by_host_endpoint_2XX
+      expr: histogram_quantile(0.999, sum by(host, endpoint, le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
+    - record: job:nginx_http_request_duration_seconds:p999_by_host_fullurl_2XX
+      expr: histogram_quantile(0.999, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by (host, fullurl, le))
     - record: job:nginx_http_request_duration_seconds:p999_by_host_instance_fullurl_2XX
       expr: histogram_quantile(0.999, sum(rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])) by (host, instance, fullurl, le))
-    - record: job:app_http_incoming_requests_latency_seconds:p999
-      expr: histogram_quantile(0.999, sum by(appId, url, instance, le) (rate(app_http_incoming_requests_latency_seconds_histogram_bucket{url!~".+.[php|jsp|gif]/"}[3m])))
-    - record: job:app_motan_requests_in_latency_seconds:p999
-      expr: histogram_quantile(0.999, sum by(appId, method, instance, le) (rate(app_motan_requests_in_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:app_motan_requests_out_latency_seconds:p999
-      expr: histogram_quantile(0.999, sum by(appId, method, instance, le) (rate(app_motan_requests_out_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:jedisCluster_latency_seconds:p999
-      expr: histogram_quantile(0.999, sum by(appId, operation,namespace, instance, le) (rate(jedisCluster_latency_seconds_histogram_bucket{}[3m])))
-    - record: job:custom_latency_seconds:p999
-      expr: histogram_quantile(0.999, sum by(appId, operation, instance, le) (rate(custom_latency_seconds_histogram_bucket{}[3m])))
+#    - record: job:nginx_http_request_duration_seconds:p999_2XX
+#      expr: histogram_quantile(0.999, sum by(le) (rate(nginx_http_request_duration_seconds_bucket{status=~"2.."}[3m])))
   - name: avg
     rules:
     - record: job:nginx_http_request_duration_seconds:avg_by_host_2XX
       expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[1m])) by (host) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[1m])) by (host)
-    - record: job:nginx_http_request_duration_seconds:avg_2XX
-      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[1m])) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[1m]))
-    - record: job:nginx_http_request_duration_seconds:avg_by_host_instance_fullurl_2XX
-      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[3m])) by (host, instance, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (host, instance, fullurl, le)
-#    - record: job:nginx_http_request_duration_seconds:avg_by_endpoint_fullurl_2XX
-#      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[10m])) by (endpoint, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[10m])) by (endpoint, fullurl, le)
-#    - record: job:nginx_http_request_duration_seconds:avg_by_endpoint_fullurl_3XX
-#      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"3.."}[10m])) by (endpoint, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"3.."}[10m])) by (endpoint, fullurl, le)
-#    - record: job:nginx_http_request_duration_seconds:avg_by_endpoint_fullurl_4XX
-#      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"4.."}[10m])) by (endpoint, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"4.."}[10m])) by (endpoint, fullurl, le)
-#    - record: job:nginx_http_request_duration_seconds:avg_by_endpoint_fullurl_5XX
-#      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"5.."}[10m])) by (endpoint, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"5.."}[10m])) by (endpoint, fullurl, le)
-#    - record: job:nginx_http_request_duration_seconds:avg_by_host
-#      expr: sum(rate(nginx_http_request_duration_seconds_sum{}[1m])) by (host) / sum(rate(nginx_http_request_duration_seconds_count{}[1m])) by (host) 
-#    - record: job:nginx_http_response_size_bytes:avg_by_endpoint_fullurl_2XX
-#      expr: sum(rate(nginx_http_response_size_bytes_sum{status=~"2.."}[10m])) by (endpoint, fullurl, le) / sum(rate(nginx_http_response_size_bytes_count{status=~"2.."}[10m])) by (endpoint, fullurl, le)
+    - record: job:nginx_http_request_duration_seconds:avg_by_host_endpoint_2XX
+      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[1m])) by (host, endpoint) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[1m])) by (host, endpoint)
+    - record: job:nginx_http_request_duration_seconds:avg_by_host_fullurl_2XX
+      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[3m])) by (host, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (host, fullurl, le)
+#    - record: job:nginx_http_request_duration_seconds:avg_by_host_instance_fullurl_2XX
+#      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[3m])) by (host, instance, fullurl, le) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[3m])) by (host, instance, fullurl, le)
+#    - record: job:nginx_http_request_duration_seconds:avg_2XX
+#      expr: sum(rate(nginx_http_request_duration_seconds_sum{status=~"2.."}[1m])) / sum(rate(nginx_http_request_duration_seconds_count{status=~"2.."}[1m]))

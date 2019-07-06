@@ -2,17 +2,17 @@ version: '3'
 services:
 
   prom:
-    image: "zrbcool/prometheus-lua-prom:latest"
+    image: "zrbcool/prometheus-lua-prom:v1.0"
     ports:
      - "9090:9090"
 
   grafana:
-    image: "zrbcool/prometheus-lua-grafana:latest"
+    image: "zrbcool/prometheus-lua-grafana:v1.0"
     ports:
      - "3000:3000"
 
   resty:
-    image: "zrbcool/prometheus-lua-nginx:latest" 
+    image: "zrbcool/prometheus-lua-nginx:v1.0" 
     ports:
      - "80:80"
      - "9145:9145"
